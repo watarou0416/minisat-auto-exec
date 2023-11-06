@@ -28,6 +28,8 @@ public class ExcelReader {
                 Row row = sheet.getRow(rowIndex);
 
                 if (row != null) {
+
+                    ss
                     // 指定された列番号のデータを取り込む
                 	List<String> colList = new ArrayList<>();
                     for (int targetColumnNumber : targetColumnNumbers) {
