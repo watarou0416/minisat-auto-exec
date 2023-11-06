@@ -12,12 +12,12 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class ExcelReader {
     public static void main(String[] args) {
-        String filePath = "C:\\\\Users\\\\ietar\\\\OneDrive\\\\デスクトップ\\\\研究室\\\\卒論データ/senni3.xlsx"; // エクセルファイルのパスを指定してください
-        int[] targetColumnNumbers = {2, 4, 6,8}; // 取得したい列番号の配列を指定してください
+        String filePath = "../data/senni3.xlsx"; // エクセルファイルのパスを指定してください
+        int[] targetColumnNumbers = {2, 4, 6, 8}; // 取得したい列番号の配列を指定してください
 
         try (FileInputStream fileInputStream = new FileInputStream(filePath);
              XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream)) {
-
+	
             Sheet sheet = workbook.getSheetAt(0); // シートのインデックスを指定して取得
 
             int lastRowNum = sheet.getLastRowNum();
@@ -58,8 +58,16 @@ public class ExcelReader {
             	System.out.println(s);
             }
             
-            DimacsWriter.writeDimacsFile(res, "C:\\\\\\\\Users\\\\\\\\ietar\\\\\\\\OneDrive\\\\\\\\デスクトップ\\\\\\\\研究室\\\\\\\\卒論データ/vend.dimacs");
-
+            // DimacsWriter.writeDimacsFile(res, "/home/kishi/Documents/data/vend.dimacs");
+            
+            List<String> cmds = new ArrayList<>();
+            cmds.add("minisat ../data/vend.dimacs");
+            List<String> execRes = ShellUtil.exec(cmds);
+            
+            for(String s : execRes) {
+            	System.out.println(s);
+            }
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
