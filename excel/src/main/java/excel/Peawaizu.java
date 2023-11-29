@@ -7,24 +7,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-public class peawaizu {
-    public static void main(String[] args) {
-        // テキストファイルから指定範囲の行の値を取得
-        String inputFilePath = "C:\\Users\\ietar\\OneDrive\\デスクトップ\\研究室\\卒論データ/feature.txt";
-        int startLine = 1; // 開始行
-        int endLine = 4;   // 終了行
-        String[] values = readLines(inputFilePath, startLine, endLine);
-
-        // dimacsファイルから最後の行を取得
-        String dimacsFilePath = "C:\\Users\\ietar\\OneDrive\\デスクトップ\\研究室\\卒論データ/vend.dimacs";
-        String lastLine = readLastLine(dimacsFilePath);
-
-        // 取得した値をdimacsファイルの一番下に書き込み
-        appendToDimacsFile(dimacsFilePath, values, lastLine);
-    }
+public class Peawaizu {
 
     // テキストファイルから指定範囲の行の値を取得
-    private static String[] readLines(String filePath, int startLine, int endLine) {
+    public static String[] readLines(String filePath, int startLine, int endLine) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String[] values = new String[endLine - startLine + 1];
             int lineCount = 0;
@@ -46,7 +32,7 @@ public class peawaizu {
     }
 
     // dimacsファイルから最後の行を取得
-    private static String readLastLine(String filePath) {
+    public static String readLastLine(String filePath) {
         try (RandomAccessFile file = new RandomAccessFile(filePath, "r")) {
             long length = file.length();
             if (length == 0) {
@@ -73,13 +59,8 @@ public class peawaizu {
     }
 
     // 取得した値をdimacsファイルの一番下に書き込み
-    private static void appendToDimacsFile(String filePath, String[] values, String lastLine) {
+    public static void appendToDimacsFile(String filePath, String[] values) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-            // 最後の行を改行して書き込む
-            if (lastLine != null) {
-                writer.newLine();
-            }
-
             // 取得した値をdimacsファイルに書き込み
             for (String value : values) {
                 writer.write(value);
